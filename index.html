@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paxology — Integration at Every Scale</title>
+  <meta name="description" content="The missing variable in how we build AI systems. Integration for individuals, companies, industries, society, and humanity.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --text: #e8e6e3;
+      --accent: #6366f1;
+      --accent2: #818cf8;
+      --muted: #6b7280;
+      --glow: rgba(99, 102, 241, 0.15);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* Particle canvas */
+    #particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Sections */
+    section {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4rem 2rem;
+      scroll-snap-align: start;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero */
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      text-align: center;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2), #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 300;
+      color: var(--muted);
+      text-align: center;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .scroll-hint .arrow {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* Content sections */
+    .content {
+      max-width: 720px;
+      text-align: center;
+    }
+    .content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 400;
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+    .content p {
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      line-height: 1.85;
+      color: #b0aead;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+    .content .highlight {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Nested levels visualization */
+    .levels {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin: 3rem 0;
+    }
+    .level-ring {
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: all 0.6s ease;
+      animation: breathe 4s ease-in-out infinite;
+    }
+    .level-ring:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 60px var(--glow);
+    }
+    .level-ring:nth-child(1) { width: 380px; height: 380px; animation-delay: 0s; }
+    .level-ring:nth-child(2) { width: 300px; height: 300px; margin-top: -340px; animation-delay: 0.5s; }
+    .level-ring:nth-child(3) { width: 220px; height: 220px; margin-top: -260px; animation-delay: 1s; }
+    .level-ring:nth-child(4) { width: 150px; height: 150px; margin-top: -185px; animation-delay: 1.5s; }
+    .level-ring:nth-child(5) { width: 80px; height: 80px; margin-top: -115px; animation-delay: 2s; }
+
+    .level-label {
+      position: absolute;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      white-space: nowrap;
+    }
+    .level-ring:nth-child(1) .level-label { top: 8px; }
+    .level-ring:nth-child(2) .level-label { top: 8px; }
+    .level-ring:nth-child(3) .level-label { top: 8px; }
+    .level-ring:nth-child(4) .level-label { top: 8px; }
+    .level-ring:nth-child(5) .level-label { top: 50%; transform: translateY(-50%); font-size: 0.6rem; }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.02); opacity: 1; }
+    }
+
+    /* Quote */
+    .smith-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      line-height: 1.7;
+      color: var(--accent2);
+      max-width: 640px;
+      text-align: center;
+      margin: 2rem 0;
+      padding: 2rem;
+      border-left: 2px solid var(--accent);
+      text-align: left;
+    }
+    .smith-attribution {
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 1rem;
+      display: block;
+    }
+
+    /* CTA */
+    .cta-section {
+      background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+    }
+    .email-capture {
+      display: flex;
+      gap: 0;
+      margin-top: 2rem;
+      max-width: 440px;
+      width: 100%;
+    }
+    .email-capture input {
+      flex: 1;
+      padding: 1rem 1.2rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-right: none;
+      border-radius: 8px 0 0 8px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .email-capture input:focus {
+      border-color: var(--accent);
+    }
+    .email-capture input::placeholder { color: var(--muted); }
+    .email-capture button {
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--accent), #7c3aed);
+      color: white;
+      border: none;
+      border-radius: 0 8px 8px 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.3s;
+      white-space: nowrap;
+    }
+    .email-capture button:hover { opacity: 0.9; }
+
+    /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .level-ring:nth-child(1) { width: 280px; height: 280px; }
+      .level-ring:nth-child(2) { width: 220px; height: 220px; margin-top: -250px; }
+      .level-ring:nth-child(3) { width: 165px; height: 165px; margin-top: -190px; }
+      .level-ring:nth-child(4) { width: 115px; height: 115px; margin-top: -140px; }
+      .level-ring:nth-child(5) { width: 65px; height: 65px; margin-top: -90px; }
+      .smith-quote { padding: 1.5rem; font-size: 1rem; }
+      .email-capture { flex-direction: column; }
+      .email-capture input { border-right: 1px solid rgba(255,255,255,0.1); border-radius: 8px; }
+      .email-capture button { border-radius: 8px; margin-top: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="fade-in">
+    <h1><span>Paxology</span></h1>
+    <p class="subtitle">The missing variable in how we build AI systems, run companies, and shape economies.</p>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- The Problem -->
+<section>
+  <div class="content fade-in">
+    <h2>The Suboptimal Optimum</h2>
+    <p>
+      Most frameworks ask two questions: did Party A win? Did Party B win?
+      If both say yes, we call it success.
+    </p>
+    <p>
+      <span class="highlight">But that misses the real question. Did the system win?</span>
+    </p>
+    <p>
+      The market. The institution. The trust layer. The long-term viability of the environment
+      both parties depend on. Two parties can optimize beautifully while the system beneath them degrades.
+      That is the pattern we call the Suboptimal Optimum — locally rational, systemically destructive.
+    </p>
+  </div>
+</section>
+
+<!-- Adam Smith -->
+<section>
+  <div class="content fade-in">
+    <blockquote class="smith-quote">
+      "Consumption is the sole end and purpose of all production; and the interest
+      of the producer ought to be attended to, only so far as it may be necessary
+      for promoting that of the consumer."
+      <span class="smith-attribution">— Adam Smith, Wealth of Nations, 1776</span>
+    </blockquote>
+    <p>
+      Smith granted producers legitimacy only as servants of the whole. For 250 years,
+      we've quoted the invisible hand while ignoring this constraint. Meta was the prototype
+      of what happens when it breaks. <span class="highlight">AI is the scale-up.</span>
+    </p>
+  </div>
+</section>
+
+<!-- Nested Levels -->
+<section>
+  <div class="content fade-in">
+    <h2>Integration at Every Scale</h2>
+    <p>
+      Paxology measures and designs for <span class="highlight">integration</span> — outcomes where
+      all parties and the system itself move in a positive direction together. Not compromise.
+      Not trade-offs. Structural integration that compounds at every level.
+    </p>
+  </div>
+  <div class="levels fade-in">
+    <div class="level-ring"><span class="level-label">Humanity</span></div>
+    <div class="level-ring"><span class="level-label">Society</span></div>
+    <div class="level-ring"><span class="level-label">Industry</span></div>
+    <div class="level-ring"><span class="level-label">Company</span></div>
+    <div class="level-ring"><span class="level-label">Self</span></div>
+  </div>
+</section>
+
+<!-- The Promise -->
+<section>
+  <div class="content fade-in">
+    <h2>AI Approaching Singularity.<br>Integration Approaching Urgency.</h2>
+    <p>
+      Autonomous AI systems optimize faster, scale faster, and coordinate faster
+      than human institutions can respond. Without a system variable built into how
+      we design and evaluate these systems, every layer of optimization becomes a
+      new layer of extraction.
+    </p>
+    <p>
+      <span class="highlight">Paxology provides the measurement framework (SAPM), the diagnostic
+      language (the Suboptimal Optimum), and the design principles (Integration)
+      to build AI that strengthens the systems it operates within</span> — from a single
+      company's operations to the global economy.
+    </p>
+    <p>
+      This is not ethics bolted onto engineering. This is engineering that accounts
+      for the full cost of what it builds.
+    </p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="content fade-in">
+    <h2>Coming Soon</h2>
+    <p>
+      Paxology is a framework, a measurement system, and an operating philosophy
+      for the age of autonomous AI. If you believe optimization without integration
+      is the defining risk of this decade, we should talk.
+    </p>
+    <div class="email-capture">
+      <input type="email" placeholder="your@email.com" aria-label="Email">
+      <button onclick="alert('Thanks — we\'ll be in touch.')">Notify Me</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Paxology. All rights reserved.
+</footer>
+
+<script>
+// Particle system
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: null, y: null };
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 1.5 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.5 + 0.1;
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (mouse.x) {
+      const dx = mouse.x - this.x;
+      const dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 150) {
+        this.x -= dx * 0.002;
+        this.y -= dy * 0.002;
+        this.opacity = Math.min(this.opacity + 0.01, 0.8);
+      }
+    }
+    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+  }
+  draw() {
+    ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity})`;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+function drawLines() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.strokeStyle = `rgba(99, 102, 241, ${0.06 * (1 - dist / 120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawLines();
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
