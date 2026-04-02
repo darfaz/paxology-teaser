@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leohim Memory — Multi-Agent Coordination Platform | Paxology</title>
+  <meta name="description" content="Shared memory for agent teams, without shared confusion. Trust boundaries, identity preservation, and memory security for AI agent fleets.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --border: #1e1e2e;
+      --text: #e8e6e3;
+      --muted: #6b7280;
+      --accent: #6366f1;
+      --accent2: #818cf8;
+      --green: #10b981;
+      --red: #ef4444;
+      --amber: #f59e0b;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 1rem 2rem;
+      background: rgba(10,10,15,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    nav .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--accent2);
+    }
+    nav .logo span { color: var(--muted); font-size: 0.85rem; font-family: 'Inter'; margin-left: 0.5rem; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    nav a:hover { color: var(--text); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 30%, rgba(99,102,241,0.08) 0%, transparent 60%);
+    }
+    .badge {
+      display: inline-block; padding: 0.4rem 1rem;
+      border: 1px solid var(--border); border-radius: 20px;
+      font-size: 0.75rem; color: var(--accent2);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 400; line-height: 1.15;
+      max-width: 800px; margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--accent), var(--accent2), #c084fc);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.15rem; color: var(--muted); max-width: 580px;
+      line-height: 1.7; font-weight: 300; margin-bottom: 2.5rem;
+    }
+    .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      padding: 0.9rem 2rem; border-radius: 8px; font-size: 0.95rem;
+      font-family: 'Inter'; cursor: pointer; text-decoration: none;
+      transition: all 0.2s; font-weight: 500;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #7c3aed);
+      color: white; border: none;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--accent); }
+
+    /* Problem statement */
+    .problem {
+      padding: 6rem 2rem; max-width: 900px; margin: 0 auto;
+      text-align: center;
+    }
+    .problem h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      margin-bottom: 1.5rem; font-weight: 400;
+    }
+    .problem p { color: var(--muted); line-height: 1.8; font-weight: 300; max-width: 680px; margin: 0 auto 1rem; }
+
+    /* Features grid */
+    .features {
+      padding: 4rem 2rem; max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .feature:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-2px); }
+    .feature .icon { font-size: 1.8rem; margin-bottom: 1rem; }
+    .feature h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.8rem; }
+    .feature p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+    /* Live demo section */
+    .demo {
+      padding: 6rem 2rem; max-width: 900px; margin: 0 auto;
+    }
+    .demo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      text-align: center; margin-bottom: 3rem; font-weight: 400;
+    }
+    .terminal {
+      background: #0d1117; border: 1px solid #21262d;
+      border-radius: 10px; overflow: hidden;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+    }
+    .terminal-header {
+      padding: 0.8rem 1rem; background: #161b22;
+      border-bottom: 1px solid #21262d;
+      display: flex; gap: 6px; align-items: center;
+    }
+    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .terminal-dot.red { background: #ff5f56; }
+    .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-dot.green { background: #27c93f; }
+    .terminal-title { color: var(--muted); font-size: 0.75rem; margin-left: 0.8rem; }
+    .terminal-body { padding: 1.2rem; line-height: 1.7; overflow-x: auto; }
+    .terminal-body .comment { color: #6a737d; }
+    .terminal-body .key { color: #79c0ff; }
+    .terminal-body .string { color: #a5d6ff; }
+    .terminal-body .response { color: #7ee787; }
+    .terminal-body .blocked { color: #f85149; }
+    .terminal-body .warning { color: #d29922; }
+    .terminal-body .prompt { color: #8b949e; }
+
+    /* How it works */
+    .how {
+      padding: 6rem 2rem; max-width: 900px; margin: 0 auto;
+    }
+    .how h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      text-align: center; margin-bottom: 3rem; font-weight: 400;
+    }
+    .step-list { display: flex; flex-direction: column; gap: 2rem; }
+    .step {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      padding: 1.5rem; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .step-num {
+      width: 40px; height: 40px; min-width: 40px;
+      border-radius: 50%; background: rgba(99,102,241,0.15);
+      color: var(--accent2); display: flex; align-items: center;
+      justify-content: center; font-weight: 600;
+    }
+    .step h4 { font-size: 1rem; margin-bottom: 0.4rem; }
+    .step p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+    /* Pricing */
+    .pricing {
+      padding: 6rem 2rem; max-width: 1000px; margin: 0 auto;
+      text-align: center;
+    }
+    .pricing h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      margin-bottom: 1rem; font-weight: 400;
+    }
+    .pricing .sub { color: var(--muted); margin-bottom: 3rem; }
+    .price-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem; text-align: left;
+    }
+    .price-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem; position: relative;
+    }
+    .price-card.featured { border-color: var(--accent); }
+    .price-card .tier { font-size: 0.85rem; color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .price-card .amount { font-size: 2rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .price-card .period { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .price-card ul { list-style: none; }
+    .price-card li { padding: 0.4rem 0; font-size: 0.9rem; color: var(--muted); }
+    .price-card li::before { content: "✓ "; color: var(--green); }
+
+    /* CTA */
+    .final-cta {
+      padding: 6rem 2rem; text-align: center;
+      background: radial-gradient(ellipse at center, rgba(99,102,241,0.06) 0%, transparent 60%);
+    }
+    .final-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      margin-bottom: 1rem; font-weight: 400;
+    }
+    .final-cta p { color: var(--muted); max-width: 500px; margin: 0 auto 2rem; line-height: 1.7; }
+
+    footer {
+      padding: 3rem 2rem; text-align: center;
+      color: var(--muted); font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Fade in */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 600px) {
+      .features { grid-template-columns: 1fr; }
+      .price-grid { grid-template-columns: 1fr; }
+      .step { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Paxology <span>/ Leohim Memory</span></div>
+  <div style="display: flex; gap: 2rem; align-items: center;">
+    <a href="./">Framework</a>
+    <a href="./memory.html">Memory Platform</a>
+    <a href="mailto:dar@iqvaluations.com" class="btn btn-ghost" style="padding: 0.5rem 1.2rem; font-size: 0.85rem;">Get in Touch</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="badge">Now in Private Beta</div>
+  <h1>Shared memory for agent teams,<br>without <em>shared confusion</em></h1>
+  <p>Your AI agents already work. They just don't coordinate safely. Leohim Memory gives them shared context, scoped trust boundaries, and persistent identity across every channel.</p>
+  <div class="cta-row">
+    <a href="mailto:dar@iqvaluations.com?subject=Leohim Memory — Pilot Interest" class="btn btn-primary">Request Pilot Access</a>
+    <a href="#demo" class="btn btn-ghost">See It Work ↓</a>
+  </div>
+</section>
+
+<section class="problem fade-in">
+  <h2>The problem isn't memory. It's coordination.</h2>
+  <p>
+    Every memory platform asks: "Where do we store the memories?" and "How fast can we retrieve them?"
+    But that's the wrong question. The real problem is that your agents don't trust each other,
+    step on each other's work, and lose their distinct identities when they share context.
+  </p>
+  <p>
+    Adding a faster vector database doesn't fix coordination.
+    You need trust as architecture, not as a filter.
+  </p>
+</section>
+
+<section class="features">
+  <div class="feature fade-in">
+    <div class="icon">🏛️</div>
+    <h3>Trust as Architecture</h3>
+    <p>Scope, sensitivity, and origin are structural walls — not query-time filters. An agent in "public" scope literally cannot access private memories. No configuration errors. No leaks.</p>
+  </div>
+  <div class="feature fade-in">
+    <div class="icon">🎭</div>
+    <h3>Identity Preservation</h3>
+    <p>Multiple distinct agents share memory without becoming the same agent. Each maintains its cognitive style, its personality, and its interpretive lens. Same event, different understanding.</p>
+  </div>
+  <div class="feature fade-in">
+    <div class="icon">🔒</div>
+    <h3>Memory Security</h3>
+    <p>Every memory write is scanned for credential leaks, prompt injection, and policy violations before storage. Built on ClawMoat's open-source security engine. No other memory platform does this.</p>
+  </div>
+  <div class="feature fade-in">
+    <div class="icon">📋</div>
+    <h3>Full Audit Trail</h3>
+    <p>Every memory has provenance: who wrote it, when, from which channel, with what confidence. Inspect exactly what each agent knows and why it knows it.</p>
+  </div>
+  <div class="feature fade-in">
+    <div class="icon">⚡</div>
+    <h3>Three Lines of Code</h3>
+    <p>One API call to write. One to read. One to get a complete context pack. Works with any agent framework — LangChain, OpenClaw, AutoGen, or your own.</p>
+  </div>
+  <div class="feature fade-in">
+    <div class="icon">🔄</div>
+    <h3>Append-Only Truth</h3>
+    <p>Events are immutable. State is always derived, never stored. No conflicting updates, no race conditions, no "which version is correct?" The log is the truth.</p>
+  </div>
+</section>
+
+<section class="demo fade-in" id="demo">
+  <h2>See What Trust Boundaries Look Like</h2>
+  <div class="terminal">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">mnemosyne — live server</span>
+    </div>
+    <div class="terminal-body">
+<span class="comment"># Agent Leo writes a strategic memory</span>
+<span class="prompt">$</span> curl -X POST /events -d '{
+    <span class="key">"text"</span>: <span class="string">"Patent strategy: file provisional by March 25"</span>,
+    <span class="key">"agent"</span>: <span class="string">"leo"</span>,
+    <span class="key">"scope"</span>: <span class="string">"leo_julian"</span>,
+    <span class="key">"sensitivity"</span>: <span class="string">"patent_ip"</span>
+  }'
+<span class="response">→ {"id": "evt_1775108...", "status": "stored", "scan": {"clean": true}}</span>
+
+<span class="comment"># Agent Dao tries to read patent-scoped memories</span>
+<span class="prompt">$</span> curl /events/search?q=patent&agent=dao&scope=leohim
+<span class="response">→ {"results": [], "count": 0}</span>  <span class="comment">← wall holds. Dao sees nothing.</span>
+
+<span class="comment"># Agent Dao tries to WRITE to patent_ip sensitivity</span>
+<span class="prompt">$</span> curl -X POST /events -d '{
+    <span class="key">"text"</span>: <span class="string">"I found the patent filing"</span>,
+    <span class="key">"agent"</span>: <span class="string">"dao"</span>,
+    <span class="key">"sensitivity"</span>: <span class="string">"patent_ip"</span>
+  }'
+<span class="blocked">→ 403 {"error": "trust_policy_violation",
+       "violations": ["Agent 'dao' not authorized for sensitivity='patent_ip'"]}</span>
+
+<span class="comment"># Memory write with credential accidentally included</span>
+<span class="prompt">$</span> curl -X POST /events -d '{
+    <span class="key">"text"</span>: <span class="string">"Deploy with api_key=sk-abc123..."</span>,
+    <span class="key">"agent"</span>: <span class="string">"leo"</span>
+  }'
+<span class="blocked">→ 422 {"error": "security_scan_failed",
+       "findings": [{"type": "credential_leak", "severity": "critical"}]}</span>
+    </div>
+  </div>
+</section>
+
+<section class="how fade-in">
+  <h2>How It Works</h2>
+  <div class="step-list">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <h4>Agents Write Events</h4>
+        <p>Every meaningful interaction — decisions, observations, tasks, preferences — is appended to the shared event log with scope, sensitivity, and origin metadata.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <h4>Security Scans Every Write</h4>
+        <p>Before storage, ClawMoat scans for credential leaks, prompt injection, and trust policy violations. Bad writes are blocked before they touch the database.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <h4>Context Packs Assemble Automatically</h4>
+        <p>Before each response, agents call <code>get_context_pack()</code>. It returns recent events + relevant matches + durable memories, all filtered by the agent's trust level.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <h4>Memories Consolidate Over Time</h4>
+        <p>Important events get promoted to durable memories — facts, decisions, preferences, relationships. Each carries confidence scores and source provenance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing fade-in">
+  <h2>Simple Pricing</h2>
+  <p class="sub">Built for teams running agent fleets, not individual chatbots.</p>
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="tier">Pilot</div>
+      <div class="amount">$10K</div>
+      <div class="period">30-day implementation</div>
+      <ul>
+        <li>Up to 5 agents</li>
+        <li>Trust boundary setup</li>
+        <li>Channel integrations</li>
+        <li>Hands-on onboarding</li>
+        <li>Success metrics tracking</li>
+      </ul>
+    </div>
+    <div class="price-card featured">
+      <div class="tier">Team</div>
+      <div class="amount">$2,500</div>
+      <div class="period">per month</div>
+      <ul>
+        <li>Up to 10 agents</li>
+        <li>Full trust architecture</li>
+        <li>Memory security scanning</li>
+        <li>Audit trail + admin view</li>
+        <li>Slack/Discord/API integrations</li>
+        <li>Priority support</li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <div class="tier">Enterprise</div>
+      <div class="amount">Custom</div>
+      <div class="period">annual contract</div>
+      <ul>
+        <li>Unlimited agents</li>
+        <li>On-prem / VPC deployment</li>
+        <li>Custom trust policies</li>
+        <li>SLA + dedicated support</li>
+        <li>Integration consulting</li>
+        <li>Paxology framework design</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta fade-in">
+  <h2>We run this in production.<br>Three agents. Five channels. Every day.</h2>
+  <p>Leohim Memory isn't a demo. It's the coordination layer we built because nothing else worked for our own multi-agent system. Now we're opening it up.</p>
+  <a href="mailto:dar@iqvaluations.com?subject=Leohim Memory — Pilot Interest" class="btn btn-primary">Request Pilot Access</a>
+</section>
+
+<footer>
+  &copy; 2026 IQ Ventures, LLC. All rights reserved.<br>
+  <a href="./" style="color: var(--muted);">Paxology</a> · <a href="https://clawmoat.com" style="color: var(--muted);">ClawMoat</a>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
