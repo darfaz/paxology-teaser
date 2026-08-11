@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>When both sides win and the system loses — Paxology</title>
+  <meta name="description" content="A plain-language introduction to Suboptimal Optimum: why a both-party win can still degrade the system both parties depend on.">
+  <meta name="author" content="Ildar Fazulyanov">
+  <meta property="og:title" content="When both sides win and the system loses">
+  <meta property="og:description" content="The standard two-party model sees A and B. Adding system variable C separates Integration from Suboptimal Optimum.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://darfaz.github.io/paxology-teaser/notes/suboptimal-optimum.html">
+  <meta property="og:image" content="https://darfaz.github.io/paxology-teaser/assets/suboptimal-optimum-system-bit.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="application/rss+xml" title="Paxology research notes" href="../feed.xml">
+  <style>
+    :root{--paper:#f4f1e9;--ink:#19201f;--muted:#626964;--line:#c9c1b2;--accent:#9b4d2b;--forest:#233a32;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.65}a{color:var(--accent)}a:focus-visible{outline:3px solid var(--accent);outline-offset:4px}.wrap{width:min(1180px,calc(100% - 40px));margin:auto}header{border-bottom:1px solid var(--line)}nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}.mark{font-family:var(--serif);font-size:1.35rem;text-decoration:none;color:var(--ink);font-weight:700}.back{font-size:.85rem;color:var(--ink);text-decoration:none;border:1px solid var(--ink);padding:10px 14px}.hero{padding:80px 0 56px;border-bottom:1px solid var(--line)}.eyebrow{font:700 .74rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:24px}h1,h2{font-family:var(--serif);font-weight:500;text-wrap:balance}h1{font-size:clamp(3rem,7vw,6.4rem);line-height:.93;letter-spacing:-.05em;margin:0;max-width:960px}.dek{font-family:var(--serif);font-size:clamp(1.2rem,2.2vw,1.65rem);line-height:1.4;max-width:790px;color:#35403c;margin:28px 0 0}.byline{margin-top:32px;font:500 .76rem/1.5 var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}.article-grid{display:grid;grid-template-columns:minmax(0,720px) 250px;gap:90px;padding:64px 0 96px;align-items:start}.prose{font-family:var(--serif);font-size:1.22rem;line-height:1.72}.prose p{margin:0 0 1.45em}.prose h2{font-size:2.1rem;line-height:1.08;margin:2.25em 0 .7em;letter-spacing:-.025em}.prose blockquote{margin:2em 0;padding:1.1em 0 1.1em 28px;border-left:3px solid var(--accent);font-size:1.35rem;color:#343c39}.equation{font-family:var(--mono);font-size:1rem;background:#e8e2d6;border:1px solid var(--line);padding:18px 20px;margin:1.8em 0;overflow:auto}.figure{margin:2.4em 0}.figure img{display:block;width:100%;height:auto;border:1px solid #35485b}.figure figcaption{font-family:var(--sans);font-size:.78rem;color:var(--muted);margin-top:9px}.side{position:sticky;top:28px;border-top:3px solid var(--forest);padding-top:18px}.side h2{font-size:1.25rem;margin:0 0 12px}.side p{font-size:.88rem;color:var(--muted)}.side a{display:block;margin:10px 0;font-size:.85rem;font-weight:700}.status{font:500 .72rem/1.6 var(--mono);color:var(--muted);border-top:1px solid var(--line);padding-top:15px;margin-top:22px}footer{background:var(--ink);color:#d9ddd8;padding:38px 0}.footer-grid{display:flex;justify-content:space-between;gap:28px;font-size:.82rem}.footer-grid a{color:#d9ddd8}@media(max-width:800px){.wrap{width:calc(100% - 32px)}.hero{padding:58px 0 40px}h1{font-size:clamp(2.75rem,13vw,3.7rem)}.article-grid{grid-template-columns:1fr;gap:42px;padding-top:42px}.prose{font-size:1.12rem}.side{position:static}.footer-grid{flex-direction:column}}
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"When both sides win and the system loses","datePublished":"2026-08-10","author":{"@type":"Person","name":"Ildar Fazulyanov"},"mainEntityOfPage":"https://darfaz.github.io/paxology-teaser/notes/suboptimal-optimum.html","image":"https://darfaz.github.io/paxology-teaser/assets/suboptimal-optimum-system-bit.png"}
+  </script>
+</head>
+<body>
+<header><nav class="wrap"><a class="mark" href="../">Paxology</a><a class="back" href="../#papers">All papers</a></nav></header>
+<main>
+  <section class="hero"><div class="wrap"><div class="eyebrow">Research note 01 · Suboptimal Optimum</div><h1>When both sides win and the system loses</h1><p class="dek">A standard two-party model sees A and B. That is enough to classify a private win. It is not enough to tell whether the system supporting both parties is getting stronger or being consumed.</p><div class="byline">Ildar “Dar” Fazulyanov · August 10, 2026 · Working note</div></div></section>
+  <div class="wrap article-grid">
+    <article class="prose">
+      <p>A standard two-party model has a simple way to score an outcome. Did Party A gain? Did Party B gain? If both answers are yes, the outcome is called win-win, mutual gain, cooperation, or private Pareto improvement.</p>
+
+      <p>That classification may be correct inside the private payoff space. It can still be wrong about the shared system.</p>
+
+      <p>Two banks can benefit from manipulating a benchmark. Two sellers can benefit from holding a price line. Two AI agents can coordinate in a way that raises their measured rewards. In each case, A and B may both gain while market integrity, consumer welfare, or the institution making those gains possible deteriorates.</p>
+
+      <blockquote>Both parties can win on the measured dimension while losing part of the system they depend on.</blockquote>
+
+      <h2>The missing bit</h2>
+
+      <p>The working paper adds a third variable, C, for whether the surrounding system is served or degraded. C is a state variable, not a third player. It represents the institutional, environmental, or organizational context in which A and B act.</p>
+
+      <div class="equation">Standard model: (A, B) → 2² = 4 outcomes<br>Extended model: (C, A, B) → 2³ = 8 outcomes</div>
+
+      <p>The extra bit separates two outcomes that look identical in the ordinary two-party model:</p>
+
+      <p><strong>C=1, A=1, B=1</strong> is Integration. Both parties gain and the system is preserved.</p>
+
+      <p><strong>C=0, A=1, B=1</strong> is Suboptimal Optimum. Both parties gain while the system degrades.</p>
+
+      <p>They differ by exactly one bit, the bit carried by C. If a model observes only A and B, it cannot make the distinction.</p>
+
+      <figure class="figure"><img src="../assets/suboptimal-optimum-system-bit.png" alt="Technical diagram showing that A equals 1 and B equals 1 can represent either Suboptimal Optimum when system variable C equals 0, or Integration when C equals 1."><figcaption>The same private-payoff observation can correspond to two different systemic outcomes.</figcaption></figure>
+
+      <h2>When the missing bit cannot be reconstructed</h2>
+
+      <p>The paper’s stronger claim is conditional. Suppose two strategy profiles can produce the same operative private payoffs for every agent but different levels of system welfare W. Under that non-reducibility condition, no function of the private payoff vector can recover W for every case.</p>
+
+      <div class="equation">If uᴾ(σ₁) = uᴾ(σ₂) but W(σ₁) ≠ W(σ₂), then W is not recoverable from uᴾ alone.</div>
+
+      <p>This is an information problem before it is an incentive problem. A perfectly designed mechanism cannot act on information that does not exist in its message, audit, or objective space. If a dashboard records only the local payoff channel, improving the dashboard’s formulas does not create the missing system signal.</p>
+
+      <p>The repair requires an independent W-channel: outcome evidence that touches the system variable rather than reconstructing it from the optimizer’s own activity.</p>
+
+      <h2>Why this matters for AI inside companies</h2>
+
+      <p>An AI agent usually has a local objective it can measure and report. Faster cycle time. More tickets closed. Higher conversion. Lower labor cost. The local result may be real.</p>
+
+      <p>The firm still has to ask where the cost moved. Did downstream rework rise? Did another team absorb exceptions? Did customer harm increase outside the agent’s evaluation window? Did the organization lose information, resilience, or trust that the local scorecard does not price?</p>
+
+      <p>Systemic Value is the organizational implementation layer of this research. It evaluates a part by the value it creates for the parts it serves, minus the value it destroys within them, net of its own cost. The point is not to add a moral score to an ROI calculation. The point is to measure outcomes at the boundary where the cost actually lands.</p>
+
+      <h2>What the paper does not prove</h2>
+
+      <p>The formal result is not a universal theorem about every game. It applies under stated assumptions, including a global Private-Systemic Tension condition. If a feasible private improvement preserves or improves W, that condition is falsified for the game. The case is not a trap outcome.</p>
+
+      <p>The formal system and counterexample witnesses have passed symbolic and numerical machine prescreening. They have not been reviewed by a human mathematician. The empirical crossover estimates also carry disclosed calibration ranges rather than settled point values.</p>
+
+      <p>I am publishing the work because it needs contact with criticism and operating evidence. Confidence should follow that contact, not precede it.</p>
+
+      <h2>What I want from readers</h2>
+
+      <p>If you work in game theory, economics, AI evaluation, or organizational design, identify the weakest assumption or the counterexample that breaks the model.</p>
+
+      <p>If you operate AI inside a company, bring one workflow where a local metric is improving and the downstream result is uncertain. The useful question is concrete: what outcome would have to be measured outside the agent’s own logs to determine whether the firm is actually better off?</p>
+    </article>
+    <aside class="side"><div class="eyebrow">Read the source</div><h2>The Often Unseen Price of Suboptimal Optimum</h2><p>Revised and corrected working paper, v5.2, July 2026.</p><a href="../papers/suboptimal-optimum-v5.2.pdf">Open the 67-page PDF</a><a href="../paper-register.json">Verify file hash</a><a href="https://www.linkedin.com/in/darfaz/">Contact Dar on LinkedIn</a><div class="status">PRELIMINARY WORKING PAPER. FORMAL RESULTS HAVE NOT YET BEEN REVIEWED BY A HUMAN MATHEMATICIAN.</div></aside>
+  </div>
+</main>
+<footer><div class="wrap footer-grid"><span>© 2026 Ildar “Dar” Fazulyanov</span><span><a href="../">Paxology research hub</a> · <a href="../feed.xml">Research-note RSS</a></span></div></footer>
+</body>
+</html>
