@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://darfaz.github.io/paxology-teaser/sitemap.xml
+Sitemap: https://paxology.ai/sitemap.xml

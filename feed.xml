@@ -2,15 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Paxology research notes</title>
-    <link>https://darfaz.github.io/paxology-teaser/</link>
+    <link>https://paxology.ai/</link>
     <description>Plain-language notes on local optimization, systemic value, AI oversight, and measurement by Ildar “Dar” Fazulyanov.</description>
     <language>en-us</language>
     <lastBuildDate>Mon, 10 Aug 2026 17:55:00 -0700</lastBuildDate>
-    <atom:link href="https://darfaz.github.io/paxology-teaser/feed.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://paxology.ai/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>When both sides win and the system loses</title>
-      <link>https://darfaz.github.io/paxology-teaser/notes/suboptimal-optimum.html</link>
-      <guid isPermaLink="true">https://darfaz.github.io/paxology-teaser/notes/suboptimal-optimum.html</guid>
+      <link>https://paxology.ai/notes/suboptimal-optimum.html</link>
+      <guid isPermaLink="true">https://paxology.ai/notes/suboptimal-optimum.html</guid>
       <pubDate>Mon, 10 Aug 2026 17:55:00 -0700</pubDate>
       <description>A plain-language introduction to Suboptimal Optimum: why a both-party win can still degrade the system both parties depend on.</description>
     </item>

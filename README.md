@@ -2,6 +2,8 @@
 
 This repository publishes the public research program of Ildar “Dar” Fazulyanov.
 
+**Canonical site:** https://paxology.ai/
+
 ## Public architecture
 
 - **Paxology** is the overarching science/framework.
