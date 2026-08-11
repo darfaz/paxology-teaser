@@ -1,0 +1,49 @@
+{
+  "title": "Paxology public paper register",
+  "author": "Ildar Fazulyanov",
+  "source": "Local SSRN submission corpus dated 2026-07-06",
+  "generated": "2026-08-10",
+  "hash_algorithm": "SHA-256",
+  "papers": [
+    {
+      "title": "The Goodhart Escape Companion",
+      "version": "0.7",
+      "file": "papers/goodhart-escape-v0.7.pdf",
+      "pages": 12,
+      "bytes": 82223,
+      "sha256": "fd0d9cf4e3b5fd54146c070ae7a57e1f06c500c73ba3458420471c7e14309e4b"
+    },
+    {
+      "title": "Past the Goodhart Horizon",
+      "version": "1.8",
+      "file": "papers/goodhart-horizon-v1.8.pdf",
+      "pages": 24,
+      "bytes": 296612,
+      "sha256": "f9c7382b813ffb55e6323ce9baed1f9860f4a6433aa06a84d07539a756c5b305"
+    },
+    {
+      "title": "The Often Unseen Price of Suboptimal Optimum",
+      "version": "5.2",
+      "file": "papers/suboptimal-optimum-v5.2.pdf",
+      "pages": 67,
+      "bytes": 268807,
+      "sha256": "4e843e0415e443b9f2d8e993ec2b2d189ee7b53fb171bc0001eaf3b4668f55a5"
+    },
+    {
+      "title": "Net Systemic Value",
+      "version": "0.9",
+      "file": "papers/systemic-value-v0.9.pdf",
+      "pages": 9,
+      "bytes": 66992,
+      "sha256": "2b1fadcb8cce94abb06aef16994038fd949cb796ef10410de8094ad765c30d4d"
+    },
+    {
+      "title": "Welfare Observability",
+      "version": "1.4",
+      "file": "papers/welfare-observability-v1.4.pdf",
+      "pages": 9,
+      "bytes": 71381,
+      "sha256": "b9fba27292f19bc93d24b99efc9eb6df2719f9b00b4d56a4d0d32819ae00dca3"
+    }
+  ]
+}
